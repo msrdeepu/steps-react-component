@@ -7,6 +7,7 @@ const messages = [
 import { useState } from "react";
 export default function App() {
   const [step, setStep] = useState(1);
+  const [isOpen, setIsOpen] = useState(true);
 
   const nextHandler = () => {
     console.log(step);
@@ -22,31 +23,42 @@ export default function App() {
     }
   };
 
+  const openHandler = () => {
+    setIsOpen(!isOpen);
+  };
+
   // const step = 2;
   return (
-    <div className="steps">
-      <div className="numbers">
-        <div className={`${step >= 1 ? "active" : ""}`}>1</div>
-        <div className={`${step >= 2 ? "active" : ""}`}>2</div>
-        <div className={`${step >= 3 ? "active" : ""}`}> 3</div>
-      </div>
-      <div className="message">
-        Step{step}: {messages[step - 1]}
-      </div>
-      <div className="buttons">
-        <button
-          onClick={previousHandler}
-          style={{ backgroundColor: "#7950f2", color: "#fff" }}
-        >
-          Previous
-        </button>
-        <button
-          onClick={nextHandler}
-          style={{ backgroundColor: "#7950f2", color: "#fff" }}
-        >
-          {step < 3 ? "Next" : "Submit"}
-        </button>
-      </div>
-    </div>
+    <>
+      <button className="close" onClick={openHandler}>
+        &times;
+      </button>
+      {isOpen && (
+        <div className="steps">
+          <div className="numbers">
+            <div className={`${step >= 1 ? "active" : ""}`}>1</div>
+            <div className={`${step >= 2 ? "active" : ""}`}>2</div>
+            <div className={`${step >= 3 ? "active" : ""}`}> 3</div>
+          </div>
+          <div className="message">
+            Step{step}: {messages[step - 1]}
+          </div>
+          <div className="buttons">
+            <button
+              onClick={previousHandler}
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+            >
+              Previous
+            </button>
+            <button
+              onClick={nextHandler}
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+            >
+              {step < 3 ? "Next" : "Submit"}
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
